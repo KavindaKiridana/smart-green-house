@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Greenhouse Dashboard</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-dark: #121621;
+            --card-bg: #1e2435;
+            --text-light: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-green: #24795d;
+            --success-green: #28a745;
+            --danger-red: #dc3545;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navbar {
+            background-color: var(--bg-dark);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: none;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-header {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 20px;
+            font-weight: 500;
+        }
+
+        .status-badge {
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .status-success {
+            background-color: var(--success-green);
+            color: white;
+        }
+
+        .status-danger {
+            background-color: var(--danger-red);
+            color: white;
+        }
+
+        .metric-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            height: 100%;
+        }
+
+        .metric-label {
+            font-size: 14px;
+            color: var(--text-muted);
+            margin-bottom: 5px;
+        }
+
+        .metric-value {
+            font-size: 24px;
+            font-weight: 500;
+        }
+
+        .control-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .control-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked+.slider {
+            background-color: var(--success-green);
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(26px);
+        }
+
+        .btn-primary {
+            background-color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .btn-primary:hover,
+        .btn-primary:focus {
+            background-color: #1a5c46;
+            border-color: #1a5c46;
+        }
+
+        @media (max-width: 768px) {
+            .metric-value {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">
+                <i class="fas fa-seedling me-2"></i>
+                Smart Greenhouse
+            </a>
+        </div>
+    </nav>
+
+    <div class="dashboard-container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="mb-0">Smart Greenhouse Dashboard</h1>
+            <button class="btn btn-primary">
+                <i class="fas fa-chart-line me-2"></i>
+                View Analysis
+            </button>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-0">System Status</h5>
+                    <p class="text-muted mb-0">Last updated: Today, 14:35</p>
+                </div>
+                <span class="status-badge status-success">
+                    <i class="fas fa-check-circle me-2"></i>
+                    Working Well
+                </span>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <span>Environmental Metrics</span>
+                        <button class="btn btn-sm btn-outline-light">
+                            <i class="fas fa-sync-alt me-1"></i>
+                            Refresh
+                        </button>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="metric-box">
+                                    <div class="metric-label">Temperature (C)</div>
+                                    <div class="metric-value">27</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="metric-box">
+                                    <div class="metric-label">Humidity (%)</div>
+                                    <div class="metric-value">72.6</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="metric-box">
+                                    <div class="metric-label">Soil Moisture (%)</div>
+                                    <div class="metric-value">58.3</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 col-lg-3 mb-3">
+                                <div class="metric-box">
+                                    <div class="metric-label">Light Level (lux)</div>
+                                    <div class="metric-value">8400</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        Controls
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h6 class="mb-0">Water Tap</h6>
+                                <small class="text-muted">Control water supply</small>
+                            </div>
+                            <label class="control-switch">
+                                <input type="checkbox" id="tapSwitch">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div>
+                                <h6 class="mb-0">Ventilation</h6>
+                                <small class="text-muted">Control air flow</small>
+                            </div>
+                            <label class="control-switch">
+                                <input type="checkbox" id="ventSwitch" checked>
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h6 class="mb-0">Lighting</h6>
+                                <small class="text-muted">Control LED lighting</small>
+                            </div>
+                            <label class="control-switch">
+                                <input type="checkbox" id="lightSwitch">
+                                <span class="slider"></span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mt-4">
+            <div class="card-header">
+                Recent Alerts
+            </div>
+            <div class="card-body p-0">
+                <ul class="list-group list-group-flush">
+                    <li
+                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-thermometer-three-quarters text-warning me-2"></i>
+                            Temperature slightly elevated
+                            <div class="text-muted small">Today, 12:14</div>
+                        </div>
+                        <span class="badge bg-warning text-dark">Warning</span>
+                    </li>
+                    <li
+                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-tint text-success me-2"></i>
+                            Watering cycle completed
+                            <div class="text-muted small">Today, 09:32</div>
+                        </div>
+                        <span class="badge bg-success">Info</span>
+                    </li>
+                    <li
+                        class="list-group-item bg-transparent text-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-wifi text-info me-2"></i>
+                            System connection restored
+                            <div class="text-muted small">Yesterday, 18:45</div>
+                        </div>
+                        <span class="badge bg-info">Info</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle the water tap control
+        document.getElementById('tapSwitch').addEventListener('change', function () {
+            const status = this.checked ? 'on' : 'off';
+            console.log(`Water tap turned ${status}`);
+            // Here you would add code to send the command to your system
+        });
+
+        // Set up current time for the status
+        const updateTime = () => {
+            const now = new Date();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.querySelector('.text-muted').textContent = `Last updated: Today, ${hours}:${minutes}`;
+        };
+
+        updateTime();
+
+        // Change system status (this would normally be triggered by your backend)
+        const setSystemStatus = (status) => {
+            const statusBadge = document.querySelector('.status-badge');
+            if (status === 'ok') {
+                statusBadge.className = 'status-badge status-success';
+                statusBadge.innerHTML = '<i class="fas fa-check-circle me-2"></i>Working Well';
+            } else {
+                statusBadge.className = 'status-badge status-danger';
+                statusBadge.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Something Went Wrong';
+            }
+        };
+
+        // Example of how to update values (would connect to your API)
+        const updateMetrics = (data) => {
+            // This is just placeholder code - you would fetch actual data
+            document.querySelectorAll('.metric-value')[0].textContent = data.temperature || '27';
+            document.querySelectorAll('.metric-value')[1].textContent = data.humidity || '72.6';
+            document.querySelectorAll('.metric-value')[2].textContent = data.soilMoisture || '58.3';
+            document.querySelectorAll('.metric-value')[3].textContent = data.lightLevel || '8400';
+        };
+
+        // Simulate periodic updates (you would replace this with actual API calls)
+        setInterval(() => {
+            updateTime();
+            // In a real app, you would fetch data from your API here
+        }, 60000);
+    </script>
+</body>
+
+</html>
