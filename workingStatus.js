@@ -18,7 +18,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-const lastUpdatedTime = 0;
+// Use `let` instead of `const` to allow reassignment
+let lastUpdatedTime = 0;
+
 // Function to fetch and display data
 function fetchData() {
     // Create a single database reference
@@ -29,18 +31,28 @@ function fetchData() {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
+                // Update lastUpdatedTime with the value from Firebase
                 lastUpdatedTime = data.time;
+
+                // Log the updated time
+                console.log(lastUpdatedTime); // This will now log the correct time
+
+                // Update the status badge to show success
+                document.getElementById("status").innerHTML = '<i class="fas fa-check-circle me-2"></i> Working Well';
+                document.getElementById("status").className = "status-badge status-success";
             } else {
                 console.error("No data found!");
+                // Update the status badge to show warning
+                document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> No data found!';
+                document.getElementById("status").className = "status-badge status-warning";
             }
         })
         .catch((error) => {
             console.error("Error reading data:", error);
+            // Update the status badge to show warning in case of an error
+            document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> Error fetching data!';
+            document.getElementById("status").className = "status-badge status-warning";
         });
-    console.log(lastUpdatedTime);
-    if (lastUpdatedTime == 0) {
-        document.getElementById("status").innerText = "No data found!";
-    }
 }
 
 // Call the function immediately when the script loads
