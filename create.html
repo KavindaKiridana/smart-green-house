@@ -50,22 +50,22 @@
         userForm.addEventListener('submit', function (e) {
             e.preventDefault(); // Prevent form from reloading the page
 
-            // Get the input values
-            const temp = document.getElementById("temp").value;
-            const humidity = document.getElementById("humidity").value;
-            const light = document.getElementById("light").value;
-            const moisture = document.getElementById("moisture").value;
+            // Get the input values and convert to proper types
+            const temp = parseFloat(document.getElementById("temp").value);
+            const humidity = parseFloat(document.getElementById("humidity").value);
+            const light = parseInt(document.getElementById("light").value);
+            const moisture = parseFloat(document.getElementById("moisture").value);
             const time = document.getElementById("time").value;
             const tap = document.getElementById("tap").value;
 
             // Write data to Firebase Realtime Database
-            set(ref(db, 'users/' + time), {
-                temp: temp,
-                humidity: humidity,
-                light: light,
-                moisture: moisture,
+            set(ref(db, 'weatherParameters/'), {
+                temp: temp,  // Now a float
+                humidity: humidity, // Now a float
+                light: light, // Now an integer
+                moisture: moisture, // Now a float
                 time: time,
-                tap: tap
+                tap: tap // Now a boolean
             }).then(() => {
                 // Alert after data is successfully written
                 alert("Data saved successfully!");
