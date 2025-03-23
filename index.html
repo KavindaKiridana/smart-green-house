@@ -65,25 +65,37 @@
                             <div class="col-md-6 col-lg-3 mb-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Temperature (C)</div>
-                                    <div class="metric-value">27</div>
+                                    <div class="metric-value">
+                                        <p id="tempValue"></p>
+                                        <!-- fix the bug here, relevant values retrived from firebase db is not displaying here -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3 mb-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Humidity (%)</div>
-                                    <div class="metric-value">72.6</div>
+                                    <div class="metric-value">
+                                        <p id="humidityValue"></p>
+                                        <!-- fix the bug here, relevant values retrived from firebase db is not displaying here -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3 mb-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Soil Moisture (%)</div>
-                                    <div class="metric-value">58.3</div>
+                                    <div class="metric-value">
+                                        <p id="soilValue"></p>
+                                        <!-- fix the bug here, relevant values retrived from firebase db is not displaying here -->
+                                    </div>
                                 </div>
                             </div>
                             <div class="col-md-6 col-lg-3 mb-3">
                                 <div class="metric-box">
                                     <div class="metric-label">Light Level (lux)</div>
-                                    <div class="metric-value">8400</div>
+                                    <div class="metric-value">
+                                        <p id="lightValue"></p>
+                                        <!-- fix the bug here, relevant values retrived from firebase db is not displaying here -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -168,53 +180,8 @@
             </div>
         </div>
     </div>
-
+    <script type="module" src="weatherParameters.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
-    <script>
-        // Toggle the water tap control
-        document.getElementById('tapSwitch').addEventListener('change', function () {
-            const status = this.checked ? 'on' : 'off';
-            console.log(`Water tap turned ${status}`);
-            // Here you would add code to send the command to your system
-        });
-
-        // Set up current time for the status
-        const updateTime = () => {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            document.querySelector('.text-muted').textContent = `Last updated: Today, ${hours}:${minutes}`;
-        };
-
-        updateTime();
-
-        // Change system status (this would normally be triggered by your backend)
-        const setSystemStatus = (status) => {
-            const statusBadge = document.querySelector('.status-badge');
-            if (status === 'ok') {
-                statusBadge.className = 'status-badge status-success';
-                statusBadge.innerHTML = '<i class="fas fa-check-circle me-2"></i>Working Well';
-            } else {
-                statusBadge.className = 'status-badge status-danger';
-                statusBadge.innerHTML = '<i class="fas fa-exclamation-circle me-2"></i>Something Went Wrong';
-            }
-        };
-
-        // Example of how to update values (would connect to your API)
-        const updateMetrics = (data) => {
-            // This is just placeholder code - you would fetch actual data
-            document.querySelectorAll('.metric-value')[0].textContent = data.temperature || '27';
-            document.querySelectorAll('.metric-value')[1].textContent = data.humidity || '72.6';
-            document.querySelectorAll('.metric-value')[2].textContent = data.soilMoisture || '58.3';
-            document.querySelectorAll('.metric-value')[3].textContent = data.lightLevel || '8400';
-        };
-
-        // Simulate periodic updates (you would replace this with actual API calls)
-        setInterval(() => {
-            updateTime();
-            // In a real app, you would fetch data from your API here
-        }, 60000);
-    </script>
 </body>
 
 </html>
