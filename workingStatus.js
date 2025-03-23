@@ -18,9 +18,6 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
-// Use `let` instead of `const` to allow reassignment
-let lastUpdatedTime = 0;
-
 // Function to fetch and display data
 function fetchData() {
     // Create a single database reference
@@ -31,11 +28,21 @@ function fetchData() {
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
+
+                // Check if the "time" key exists in the data
+                if (!data.time) {
+                    // If "time" key is missing, show error
+                    document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> Something went wrong.';
+                    document.getElementById("status").className = "status-badge status-danger";
+                    console.error("Time key is missing in Firebase data.");
+                    return; // Exit the function
+                }
+
                 // Update lastUpdatedTime with the value from Firebase
-                lastUpdatedTime = data.time;
+                const lastUpdatedTime = data.time;
 
                 // Log the updated time
-                console.log(lastUpdatedTime); // This will now log the correct time
+                console.log("Last updated time from Firebase:", lastUpdatedTime);
 
                 // Get the current datetime
                 const now = new Date();
@@ -47,42 +54,42 @@ function fetchData() {
                 const minutes = String(now.getMinutes()).padStart(2, '0');
                 const seconds = String(now.getSeconds()).padStart(2, '0');
 
-                let currentTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+                const currentTime = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 
                 // Convert the strings into Date objects
-                let date1 = new Date(lastUpdatedTime);
-                let date2 = new Date(currentTime);
+                const date1 = new Date(lastUpdatedTime);
+                const date2 = new Date(currentTime);
 
                 // Subtract the two Date objects (result is in milliseconds)
-                let differenceInMilliseconds = date2 - date1;
+                const differenceInMilliseconds = date2 - date1;
 
-                // Convert the difference into meaningful units
-                let differenceInSeconds = differenceInMilliseconds / 1000; // Convert to seconds
-                let differenceInMinutes = differenceInSeconds / 60; // Convert to minutes
+                // Convert the difference into minutes
+                const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
 
                 // Log the differences
                 console.log("Difference in minutes:", differenceInMinutes);
 
+                // Update the status based on the difference
                 if (differenceInMinutes <= 5) {
-                    // Update the status badge to show success
+                    // If difference is ≤ 5 minutes, show success
                     document.getElementById("status").innerHTML = '<i class="fas fa-check-circle me-2"></i> Working Well';
                     document.getElementById("status").className = "status-badge status-success";
                 } else {
-                    document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> The application is not available at this time. ';
+                    // If difference is > 5 minutes, show warning
+                    document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> The application is not available at this time.';
                     document.getElementById("status").className = "status-badge status-warning";
                 }
 
-
             } else {
+                // If no data is found in Firebase
                 console.error("No data found!");
-                // Update the status badge to show warning
                 document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> No data found!';
                 document.getElementById("status").className = "status-badge status-danger";
             }
         })
         .catch((error) => {
+            // If there's an error fetching data
             console.error("Error reading data:", error);
-            // Update the status badge to show warning in case of an error
             document.getElementById("status").innerHTML = '<i class="fas fa-times-circle me-2"></i> Error fetching data!';
             document.getElementById("status").className = "status-badge status-danger";
         });

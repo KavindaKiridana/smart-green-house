@@ -57,6 +57,13 @@ body {
     color: white;
 }
 
+.status-warning {
+    background-color: #ffc107;
+    /* Yellow */
+    color: black;
+    /* Black text for better contrast */
+}
+
 .metric-box {
     background-color: rgba(0, 0, 0, 0.2);
     border-radius: 8px;
