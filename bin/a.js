@@ -23,12 +23,6 @@ let differenceInMilliseconds = date2 - date1;
 // Convert the difference into meaningful units
 let differenceInSeconds = differenceInMilliseconds / 1000; // Convert to seconds
 let differenceInMinutes = differenceInSeconds / 60; // Convert to minutes
-let differenceInHours = differenceInMinutes / 60; // Convert to hours
-let differenceInDays = differenceInHours / 24; // Convert to days
 
-// Output the results
-console.log("Difference in milliseconds:", differenceInMilliseconds);
-console.log("Difference in seconds:", differenceInSeconds);
+// Log the differences
 console.log("Difference in minutes:", differenceInMinutes);
-console.log("Difference in hours:", differenceInHours);
-console.log("Difference in days:", differenceInDays);
