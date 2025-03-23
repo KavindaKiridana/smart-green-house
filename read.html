@@ -13,11 +13,10 @@
         <input type="submit" value="Read Data">
     </form>
     <p id="output"></p>
-
     <script type="module">
-        // Import Firebase functions
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+        // Import Firebase functions - fixed imports
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         // Firebase configuration
         const firebaseConfig = {
@@ -31,30 +30,37 @@
             measurementId: "G-PLPRSHRBH7"
         };
 
-
+        // Initialize Firebase
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
         // Add an event listener to the form
         document.getElementById("readForm").addEventListener("submit", function (e) {
             e.preventDefault();
+
             const username = document.getElementById("username").value;
+            const outputElement = document.getElementById("output");
+
+            // Clear previous output
+            outputElement.innerText = "Loading...";
 
             // Reference the data and get it
             const dbRef = ref(db);
-            get(child(dbRef, `user/${username}`))
+
+            // Updated path to "users/" instead of "user/" to match write form
+            get(child(dbRef, `users/${username}`))
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        document.getElementById("output").innerText =
-                            `Name: ${data.username} 
-                            Email: ${data.email} 
-                            Phone: ${data.phone}`;
+                        outputElement.innerText = `Name: ${data.username}\nEmail: ${data.email}\nPhone: ${data.phone}`;
                     } else {
-                        document.getElementById("output").innerText = "No data found";
+                        outputElement.innerText = "No data found for this username";
                     }
                 })
-                .catch((error) => console.error("Error reading data:", error));
+                .catch((error) => {
+                    console.error("Error reading data:", error);
+                    outputElement.innerText = `Error: ${error.message}`;
+                });
         });
     </script>
 </body>

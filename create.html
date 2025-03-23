@@ -14,11 +14,10 @@
         <input type="tel" id="phone" placeholder="Phone" required><br>
         <input type="submit" value="Submit" id="submit">
     </form>
-
     <script type="module">
         // Import the functions you need from the SDKs 
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-app.js";
-        import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/11.5.0/firebase-analytics.js";
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+        import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
         // Firebase configuration
         const firebaseConfig = {
@@ -51,16 +50,19 @@
             const phone = document.getElementById("phone").value;
 
             // Write data to Firebase Realtime Database
-            set(ref(db, 'user/' + username), {
+            set(ref(db, 'users/' + username), {
                 username: username,
                 email: email,
                 phone: phone
             }).then(() => {
                 // Alert after data is successfully written
-                alert("Login successful");
+                alert("Data saved successfully!");
+                // Optional: Reset the form
+                userForm.reset();
             }).catch((error) => {
-                // Log errors to the console
+                // Log errors to the console and alert the user
                 console.error("Error writing data: ", error);
+                alert("Error saving data: " + error.message);
             });
         });
     </script>
