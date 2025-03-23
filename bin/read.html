@@ -9,12 +9,12 @@
 
 <body>
     <form id="readForm">
-        <input type="text" id="username" placeholder="Enter Name to Read" required><br>
         <input type="submit" value="Read Data">
     </form>
     <p id="output"></p>
+
     <script type="module">
-        // Import Firebase functions - fixed imports
+        // Import Firebase functions
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
         import { getDatabase, ref, get, child } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
@@ -34,27 +34,30 @@
         const app = initializeApp(firebaseConfig);
         const db = getDatabase(app);
 
-        // Add an event listener to the form
+        // Add event listener to the form for fetching data
         document.getElementById("readForm").addEventListener("submit", function (e) {
-            e.preventDefault();
+            e.preventDefault(); // Prevent default form submission
 
-            const username = document.getElementById("username").value;
             const outputElement = document.getElementById("output");
+            outputElement.innerText = "Loading..."; // Show loading message
 
-            // Clear previous output
-            outputElement.innerText = "Loading...";
-
-            // Reference the data and get it
+            // Reference the 'weatherParameters' node
             const dbRef = ref(db);
-
-            // Updated path to "users/" instead of "user/" to match write form
-            get(child(dbRef, `users/${username}`))
+            get(child(dbRef, "weatherParameters"))
                 .then((snapshot) => {
                     if (snapshot.exists()) {
                         const data = snapshot.val();
-                        outputElement.innerText = `Name: ${data.username}\nEmail: ${data.email}\nPhone: ${data.phone}`;
+                        // Display the fetched data in a formatted way
+                        outputElement.innerText = `
+                            Temperature: ${data.temp}°C
+                            Humidity: ${data.humidity}%
+                            Light: ${data.light} lux
+                            Soil Moisture: ${data.moisture}%
+                            Tap Status: ${data.tap}
+                            Time: ${data.time}
+                        `;
                     } else {
-                        outputElement.innerText = "No data found for this username";
+                        outputElement.innerText = "No data found!";
                     }
                 })
                 .catch((error) => {
@@ -63,6 +66,7 @@
                 });
         });
     </script>
+
 </body>
 
 </html>
