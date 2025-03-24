@@ -20,6 +20,8 @@ const db = getDatabase(app);
 
 // Flag to track whether the checkbox change is user-initiated
 let isUserInteraction = true;
+// Timer variable to manage the timeout
+let formVisibilityTimer = null;
 
 // Function to fetch and display data
 function fetchData() {
@@ -62,13 +64,21 @@ function handleWaterSwitchChange(event) {
 
     console.log("Water tap switch state changed by user.");
 
-    // Show the formDiv
+    // Get the form div
     const formDiv = document.getElementById("formDiv");
-    formDiv.style.display = "flex"; // Make the form visible
 
-    // Hide the formDiv after 1 minute (60000 milliseconds)
-    setTimeout(() => {
-        formDiv.style.display = "none"; // Hide the form
+    // Show the form
+    formDiv.style.display = "block";
+
+    // Clear any existing timer
+    if (formVisibilityTimer) {
+        clearTimeout(formVisibilityTimer);
+    }
+
+    // Hide the form after 1 minute (60000 milliseconds)
+    formVisibilityTimer = setTimeout(() => {
+        formDiv.style.display = "none";
+        console.log("Form hidden after timeout");
     }, 60000);
 }
 
@@ -80,25 +90,50 @@ function handleFormSubmit(event) {
     const hours = document.getElementById("hoursInput").value;
     const minutes = document.getElementById("minutesInput").value;
 
-    // Log the values to the console
-    console.log(`User entered time: ${hours} hours and ${minutes} minutes`);
+    // Format the time as HH:MM
+    const formattedTime = `${hours.padStart(2, "0")}:${minutes.padStart(2, "0")}`;
 
-    // Hide the formDiv after submission
+    // Log the formatted time to the console
+    console.log(`User entered time: ${formattedTime}`);
+
+    // Hide the form div after submission
     const formDiv = document.getElementById("formDiv");
     formDiv.style.display = "none";
+
+    // Clear the timer since we're hiding the form manually
+    if (formVisibilityTimer) {
+        clearTimeout(formVisibilityTimer);
+        formVisibilityTimer = null;
+    }
 }
 
-// Add event listener to the checkbox
-document.getElementById("waterSwitch").addEventListener("change", handleWaterSwitchChange);
-
-// Add event listener to the form
-document.getElementById("getTime").addEventListener("submit", handleFormSubmit);
-
-// Hide the formDiv on page load
-window.addEventListener("load", () => {
+// Initialize the page
+document.addEventListener("DOMContentLoaded", () => {
+    // Initially hide the form div
     const formDiv = document.getElementById("formDiv");
-    formDiv.style.display = "none";
-});
+    if (formDiv) {
+        formDiv.style.display = "none";
+        console.log("Form hidden on page load");
+    } else {
+        console.error("Form div element not found");
+    }
 
-// Call the function immediately when the script loads
-fetchData();
+    // Add event listener to the checkbox
+    const waterSwitch = document.getElementById("waterSwitch");
+    if (waterSwitch) {
+        waterSwitch.addEventListener("change", handleWaterSwitchChange);
+    } else {
+        console.error("Water switch element not found");
+    }
+
+    // Add event listener to the form
+    const getTimeForm = document.getElementById("getTime");
+    if (getTimeForm) {
+        getTimeForm.addEventListener("submit", handleFormSubmit);
+    } else {
+        console.error("Get time form not found");
+    }
+
+    // Fetch data from Firebase
+    fetchData();
+});
