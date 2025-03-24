@@ -113,67 +113,72 @@
                                 <span class="slider"></span>
                             </label>
                         </div>
-                        <!-- <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div>
-                                <h6 class="mb-0">Ventilation</h6>
-                                <small class="text-muted">Control air flow</small>
-                            </div>
-                            <label class="control-switch">
-                                <input type="checkbox" id="ventSwitch" checked>
-                                <span class="slider"></span>
-                            </label>
-                        </div> -->
-                        <!-- <div class="d-flex justify-content-between align-items-center">
-                            <div>
-                                <h6 class="mb-0">Lighting</h6>
-                                <small class="text-muted">Control LED lighting</small>
-                            </div>
-                            <label class="control-switch">
-                                <input type="checkbox" id="lightSwitch">
-                                <span class="slider"></span>
-                            </label>
-                        </div> -->
+                        <div id="formDiv1" class="d-flex justify-content-between align-items-center mb-4">
+                            <form id="getTime">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="hoursInput" class="form-label">Hours</label>
+                                        <input type="number"
+                                            class="form-control form-control-sm bg-dark border-secondary"
+                                            id="hoursInput" name="hoursInput" min="0" max="23" value="0" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label for="minutesInput" class="form-label">Minutes</label>
+                                        <input type="number"
+                                            class="form-control form-control-sm bg-dark border-secondary"
+                                            id="minutesInput" name="minutesInput" min="0" max="59" value="0" required>
+                                    </div>
+                                    <div class="col-4">
+                                        <label>&nbsp;</label>
+                                        <button type="submit" class="btn btn-primary btn-sm w-100">Set Time</button>
+                                    </div>
+                            </form>
+                        </div>
+
                     </div>
+                    <!-- <div id="formDiv2" class="d-flex justify-content-between align-items-center">
+                            <button type="submit" class="btn btn-primary btn-sm w-100">Set Time</button></form>
+                        </div> -->
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="card mt-4">
-            <div class="card-header">
-                Recent Alerts
-            </div>
-            <div class="card-body p-0">
-                <ul class="list-group list-group-flush">
-                    <li
-                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-thermometer-three-quarters text-warning me-2"></i>
-                            Temperature slightly elevated
-                            <div class="text-muted small">Today, 12:14</div>
-                        </div>
-                        <span class="badge bg-warning text-dark">Warning</span>
-                    </li>
-                    <li
-                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-tint text-success me-2"></i>
-                            Watering cycle completed
-                            <div class="text-muted small">Today, 09:32</div>
-                        </div>
-                        <span class="badge bg-success">Info</span>
-                    </li>
-                    <li
-                        class="list-group-item bg-transparent text-light d-flex justify-content-between align-items-center">
-                        <div>
-                            <i class="fas fa-wifi text-info me-2"></i>
-                            System connection restored
-                            <div class="text-muted small">Yesterday, 18:45</div>
-                        </div>
-                        <span class="badge bg-info">Info</span>
-                    </li>
-                </ul>
-            </div>
+    <div class="card mt-4">
+        <div class="card-header">
+            Recent Alerts
         </div>
+        <div class="card-body p-0">
+            <ul class="list-group list-group-flush">
+                <li
+                    class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-thermometer-three-quarters text-warning me-2"></i>
+                        Temperature slightly elevated
+                        <div class="text-muted small">Today, 12:14</div>
+                    </div>
+                    <span class="badge bg-warning text-dark">Warning</span>
+                </li>
+                <li
+                    class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-tint text-success me-2"></i>
+                        Watering cycle completed
+                        <div class="text-muted small">Today, 09:32</div>
+                    </div>
+                    <span class="badge bg-success">Info</span>
+                </li>
+                <li class="list-group-item bg-transparent text-light d-flex justify-content-between align-items-center">
+                    <div>
+                        <i class="fas fa-wifi text-info me-2"></i>
+                        System connection restored
+                        <div class="text-muted small">Yesterday, 18:45</div>
+                    </div>
+                    <span class="badge bg-info">Info</span>
+                </li>
+            </ul>
+        </div>
+    </div>
     </div>
     <script type="module" src="waterTap.js"></script>
     <script type="module" src="weatherParameters.js"></script>
@@ -182,3 +187,4 @@
 </body>
 
 </html>
+<!--u r only allow to modify this 3 lines which mentioned in code before, give me modified codes-->
