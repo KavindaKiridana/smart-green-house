@@ -22,16 +22,23 @@ const db = getDatabase(app);
 function fetchData() {
     // Create a single database reference
     const dbRef = ref(db);
-    let waterTap;
+
     // Get data from Firebase
     get(child(dbRef, "weatherParameters"))
         .then((snapshot) => {
             if (snapshot.exists()) {
                 const data = snapshot.val();
-                waterTap = data.tap;
-                console.log(waterTap);
+
+                // Check if 'tap' key exists in the data
+                if (data.tap !== undefined) {
+                    // Set the checkbox state based on 'data.tap'
+                    document.getElementById("waterSwitch").checked = data.tap === "true"; // Ensure "true" is a string
+                    console.log("Water tap state:", data.tap);
+                } else {
+                    console.error("'tap' key not found in Firebase data.");
+                }
             } else {
-                console.error("waterTap data not found.");
+                console.error("No data found in Firebase.");
             }
         })
         .catch((error) => {
@@ -42,5 +49,6 @@ function fetchData() {
 // Call the function immediately when the script loads
 fetchData();
 
-// Add auto-refresh functionality (every 60 seconds)
-setInterval(fetchData, 60000);
+// Optional: Add auto-refresh functionality (every 60 seconds)
+// Uncomment the line below if you want to refresh the data every 60 seconds
+// setInterval(fetchData, 60000);
