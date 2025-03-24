@@ -46,9 +46,18 @@ function fetchData() {
         });
 }
 
+// Function to handle checkbox change event
+let isUserInteraction = true;
+function handleWaterSwitchChange(event) {
+    // Only proceed if the change is user-initiated
+    if (!isUserInteraction) return;
+
+    console.log("Water tap switch state changed");
+}
+
+// Add event listener to the checkbox
+document.getElementById("waterSwitch").addEventListener("change", handleWaterSwitchChange);
+
 // Call the function immediately when the script loads
 fetchData();
 
-// Optional: Add auto-refresh functionality (every 60 seconds)
-// Uncomment the line below if you want to refresh the data every 60 seconds
-// setInterval(fetchData, 60000);
