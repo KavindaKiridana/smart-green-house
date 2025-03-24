@@ -110,25 +110,28 @@
                             </label>
                         </div>
                         <div id="formDiv" class="d-flex justify-content-between align-items-center mb-4">
-                            <form id="getTime">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="hoursInput" class="form-label">Hours</label>
-                                        <input type="number"
-                                            class="form-control form-control-sm bg-dark border-secondary"
-                                            id="hoursInput" name="hoursInput" min="0" max="23" value="0" required>
-                                    </div>
-                                    <div class="col-4">
-                                        <label for="minutesInput" class="form-label">Minutes</label>
-                                        <input type="number"
-                                            class="form-control form-control-sm bg-dark border-secondary"
-                                            id="minutesInput" name="minutesInput" min="0" max="59" value="0" required>
-                                    </div>
-                                    <div class="col-4">
-                                        <label>&nbsp;</label>
-                                        <button type="submit" class="btn btn-primary btn-sm w-100">Set Time</button>
-                                    </div>
-                            </form>
+                            <div id="displayForm">
+                                <form id="getTime">
+                                    <div class="row">
+                                        <div class="col-4">
+                                            <label for="hoursInput" class="form-label">Hours</label>
+                                            <input type="number"
+                                                class="form-control form-control-sm bg-dark border-secondary"
+                                                id="hoursInput" name="hoursInput" min="0" max="23" value="0" required>
+                                        </div>
+                                        <div class="col-4">
+                                            <label for="minutesInput" class="form-label">Minutes</label>
+                                            <input type="number"
+                                                class="form-control form-control-sm bg-dark border-secondary"
+                                                id="minutesInput" name="minutesInput" min="0" max="59" value="0"
+                                                required>
+                                        </div>
+                                        <div class="col-4">
+                                            <label>&nbsp;</label>
+                                            <button type="submit" class="btn btn-primary btn-sm w-100">Set Time</button>
+                                        </div>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
