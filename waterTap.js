@@ -18,6 +18,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
+// Flag to track whether the checkbox change is user-initiated
+let isUserInteraction = true;
+
 // Function to fetch and display data
 function fetchData() {
     // Create a single database reference
@@ -31,9 +34,15 @@ function fetchData() {
 
                 // Check if 'tap' key exists in the data
                 if (data.tap !== undefined) {
+                    // Disable user interaction flag while programmatically updating the checkbox
+                    isUserInteraction = false;
+
                     // Set the checkbox state based on 'data.tap'
                     document.getElementById("waterSwitch").checked = data.tap === "true"; // Ensure "true" is a string
                     console.log("Water tap state:", data.tap);
+
+                    // Re-enable user interaction flag after updating
+                    isUserInteraction = true;
                 } else {
                     console.error("'tap' key not found in Firebase data.");
                 }
@@ -47,17 +56,49 @@ function fetchData() {
 }
 
 // Function to handle checkbox change event
-let isUserInteraction = true;
 function handleWaterSwitchChange(event) {
     // Only proceed if the change is user-initiated
     if (!isUserInteraction) return;
 
-    console.log("Water tap switch state changed");
+    console.log("Water tap switch state changed by user.");
+
+    // Show the formDiv
+    const formDiv = document.getElementById("formDiv");
+    formDiv.style.display = "flex"; // Make the form visible
+
+    // Hide the formDiv after 1 minute (60000 milliseconds)
+    setTimeout(() => {
+        formDiv.style.display = "none"; // Hide the form
+    }, 60000);
+}
+
+// Function to handle form submission
+function handleFormSubmit(event) {
+    event.preventDefault(); // Prevent the form from submitting and refreshing the page
+
+    // Get the values from the form inputs
+    const hours = document.getElementById("hoursInput").value;
+    const minutes = document.getElementById("minutesInput").value;
+
+    // Log the values to the console
+    console.log(`User entered time: ${hours} hours and ${minutes} minutes`);
+
+    // Hide the formDiv after submission
+    const formDiv = document.getElementById("formDiv");
+    formDiv.style.display = "none";
 }
 
 // Add event listener to the checkbox
 document.getElementById("waterSwitch").addEventListener("change", handleWaterSwitchChange);
 
+// Add event listener to the form
+document.getElementById("getTime").addEventListener("submit", handleFormSubmit);
+
+// Hide the formDiv on page load
+window.addEventListener("load", () => {
+    const formDiv = document.getElementById("formDiv");
+    formDiv.style.display = "none";
+});
+
 // Call the function immediately when the script loads
 fetchData();
-
