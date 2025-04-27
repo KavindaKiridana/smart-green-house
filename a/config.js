@@ -1,11 +1,11 @@
 // config.js
 export const firebaseConfig = {
-    apiKey: "AIzaSyBlfnZvS9N2XBjBMiKMnlCywc-FjBnkDhQ",
-    authDomain: "plnat-growth.firebaseapp.com",
-    databaseURL: "https://plnat-growth-default-rtdb.asia-southeast1.firebasedatabase.app",
-    projectId: "plnat-growth",
-    storageBucket: "plnat-growth.appspot.com",
-    messagingSenderId: "714741844786",
-    appId: "1:714741844786:web:ce7246947c8d5a109f252b",
-    measurementId: "G-PLPRSHRBH7"
+    apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+    authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+    databaseURL: import.meta.env.VITE_FIREBASE_DATABASE_URL,
+    projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_FIREBASE_APP_ID,
+    measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID
 };
