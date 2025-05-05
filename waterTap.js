@@ -52,7 +52,17 @@ function handleWaterTapToggle() {
 }
 
 // Fetch water tap status on page load
-window.addEventListener("load", () => {
+// window.addEventListener("load", () => {
+//     updateWaterTapStatus();
+//     handleWaterTapToggle();
+// });
+
+function fetchData() {
     updateWaterTapStatus();
     handleWaterTapToggle();
-});
+}
+// Call the function immediately when the script loads
+fetchData();
+// Add auto-refresh functionality 
+setInterval(fetchData, 1);
+// 1 second = 1000 milliseconds, so 1 second interval is set for auto-refresh
