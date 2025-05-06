@@ -29,10 +29,10 @@ function fetchData() {
     const lightElement = document.getElementById("lightValue");
 
     // Set loading messages
-    tempElement.innerText = "Loading...";
-    humidityElement.innerText = "Loading...";
-    soilElement.innerText = "Loading...";
-    lightElement.innerText = "Loading...";
+    // tempElement.innerText = "Loading...";
+    // humidityElement.innerText = "Loading...";
+    // soilElement.innerText = "Loading...";
+    // lightElement.innerText = "Loading...";
 
     // Get data from Firebase
     get(child(dbRef, "weatherParameters"))
@@ -68,4 +68,5 @@ function fetchData() {
 fetchData();
 
 // Add auto-refresh functionality (every 60 seconds)
-setInterval(fetchData, 60000);
+//setInterval(fetchData, 60000);
+setInterval(fetchData, 10000);

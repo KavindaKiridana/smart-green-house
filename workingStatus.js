@@ -99,4 +99,5 @@ function fetchData() {
 fetchData();
 
 // Add auto-refresh functionality (every 60 seconds)
-setInterval(fetchData, 60000);
+//setInterval(fetchData, 60000);
+setInterval(fetchData, 1);
