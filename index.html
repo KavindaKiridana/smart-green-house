@@ -152,12 +152,40 @@
             </div>
         </div>
 
-        <div class="card mt-4" id="Alerts">
+        <div class="card mt-4">
             <div class="card-header">
-                <span class="badge bg-warning text-dark">Recent Alerts</span>
+                Recent Alerts
             </div>
             <div class="card-body p-0">
-
+                <ul class="list-group list-group-flush">
+                    <li
+                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-thermometer-three-quarters text-warning me-2"></i>
+                            Temperature slightly elevated
+                            <div class="text-muted small">Today, 12:14</div>
+                        </div>
+                        <span class="badge bg-warning text-dark">Warning</span>
+                    </li>
+                    <li
+                        class="list-group-item bg-transparent text-light border-bottom border-dark d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-tint text-success me-2"></i>
+                            Watering cycle completed
+                            <div class="text-muted small">Today, 09:32</div>
+                        </div>
+                        <span class="badge bg-success">Info</span>
+                    </li>
+                    <li
+                        class="list-group-item bg-transparent text-light d-flex justify-content-between align-items-center">
+                        <div>
+                            <i class="fas fa-wifi text-info me-2"></i>
+                            System connection restored
+                            <div class="text-muted small">Yesterday, 18:45</div>
+                        </div>
+                        <span class="badge bg-info">Info</span>
+                    </li>
+                </ul>
             </div>
         </div>
 
@@ -166,7 +194,7 @@
     <script type="module" src="waterTap.js"></script>
     <script type="module" src="weatherParameters.js"></script>
     <script type="module" src="workingStatus.js"></script>
-    <!-- <script type="module" src="alerts.js"></script> -->
+    <script type="module" src="alerts.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
